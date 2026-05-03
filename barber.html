@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLADE | Барбершоп</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #0a0a0a;
+            --dark: #111111;
+            --gold: #c9a84c;
+            --gold-light: #e8c97a;
+            --cream: #f5f0e8;
+            --gray: #888;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--black);
+            color: var(--cream);
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 60px;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+        }
+        .logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 36px;
+            letter-spacing: 8px;
+            color: var(--gold);
+        }
+        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--cream);
+            font-size: 13px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            transition: opacity 0.3s, color 0.3s;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--gold); }
+        .btn-nav {
+            border: 1px solid var(--gold) !important;
+            padding: 10px 28px !important;
+            color: var(--gold) !important;
+            opacity: 1 !important;
+            transition: all 0.3s !important;
+        }
+        .btn-nav:hover { background: var(--gold) !important; color: var(--black) !important; }
+
+        /* HERO */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 50%),
+                repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(201,168,76,0.03) 80px, rgba(201,168,76,0.03) 81px),
+                repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(201,168,76,0.03) 80px, rgba(201,168,76,0.03) 81px);
+        }
+        .hero-img-placeholder {
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 55%;
+            background: linear-gradient(135deg, #1a1a1a, #222);
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 0 60px;
+            max-width: 600px;
+        }
+        .hero-tag {
+            font-size: 11px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .hero-tag::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+        }
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 110px;
+            line-height: 0.9;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+        }
+        .hero h1 span { color: var(--gold); }
+        .hero p {
+            font-size: 16px;
+            line-height: 1.8;
+            opacity: 0.7;
+            max-width: 400px;
+            margin-bottom: 50px;
+        }
+        .hero-btns { display: flex; gap: 20px; align-items: center; }
+        .btn-gold {
+            background: var(--gold);
+            color: var(--black);
+            text-decoration: none;
+            padding: 18px 45px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+        .btn-ghost {
+            color: var(--cream);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-ghost:hover { opacity: 1; }
+        .btn-ghost::after { content: '→'; font-size: 18px; }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid rgba(201,168,76,0.2);
+            border-bottom: 1px solid rgba(201,168,76,0.2);
+        }
+        .stat {
+            padding: 50px 60px;
+            border-right: 1px solid rgba(201,168,76,0.2);
+            animation: fadeIn 0.8s ease forwards;
+        }
+        .stat:last-child { border-right: none; }
+        .stat-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 70px;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.5;
+            margin-top: 5px;
+        }
+
+        /* SERVICES */
+        .services { padding: 100px 60px; }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+        }
+        .section-tag {
+            font-size: 11px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+        .section-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 60px;
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+        .service-card {
+            background: var(--dark);
+            padding: 45px 40px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gold);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover { background: #161616; }
+        .service-num {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 60px;
+            color: rgba(201,168,76,0.15);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+        .service-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        .service-desc {
+            font-size: 14px;
+            opacity: 0.5;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+        .service-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 42px;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+        .service-price span { font-size: 18px; opacity: 0.6; }
+
+        /* MASTERS */
+        .masters { padding: 100px 60px; background: var(--dark); }
+        .masters-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+        .master-card { position: relative; overflow: hidden; }
+        .master-img {
+            width: 100%;
+            height: 380px;
+            background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+        .master-info { padding: 25px 0; }
+        .master-name {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 28px;
+            letter-spacing: 3px;
+        }
+        .master-role {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #050505;
+            padding: 80px 60px 40px;
+            border-top: 1px solid rgba(201,168,76,0.15);
+        }
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        .footer-logo {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: var(--gold);
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+        }
+        .footer-desc { opacity: 0.4; font-size: 14px; line-height: 1.8; max-width: 300px; }
+        .footer-col h4 {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 25px;
+        }
+        .footer-col a, .footer-col p {
+            display: block;
+            text-decoration: none;
+            color: var(--cream);
+            opacity: 0.5;
+            font-size: 14px;
+            margin-bottom: 12px;
+            transition: opacity 0.3s;
+        }
+        .footer-col a:hover { opacity: 1; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0.3;
+            font-size: 13px;
+        }
+        .btn-book-footer {
+            background: var(--gold);
+            color: var(--black);
+            text-decoration: none;
+            padding: 18px 45px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+        .btn-book-footer:hover { background: var(--gold-light); }
+
+        @media (max-width: 768px) {
+            nav { padding: 20px 25px; }
+            .nav-links { display: none; }
+            .hero-content { padding: 0 25px; }
+            .hero h1 { font-size: 70px; }
+            .hero-img-placeholder { display: none; }
+            .stats { grid-template-columns: 1fr; }
+            .stat { padding: 35px 25px; border-right: none; border-bottom: 1px solid rgba(201,168,76,0.2); }
+            .services, .masters { padding: 60px 25px; }
+            .services-grid, .masters-grid { grid-template-columns: 1fr; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+            footer { padding: 60px 25px 30px; }
+            .footer-top { grid-template-columns: 1fr; gap: 40px; }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">BLADE</div>
+    <div class="nav-links">
+        <a href="#services">Услуги</a>
+        <a href="#masters">Мастера</a>
+        <a href="#contact">Контакты</a>
+        <a href="https://wa.me/79991234567" class="btn-nav" target="_blank">Записаться</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-img-placeholder">ФОТО МАСТЕРА</div>
+    <div class="hero-content">
+        <div class="hero-tag">Барбершоп в Москве</div>
+        <h1>ТВОЙ<br><span>СТИЛЬ</span><br>ТВОИ<br>ПРАВИЛА</h1>
+        <p>Мужские стрижки, бритьё и уход за бородой. Профессиональные мастера, премиальные материалы, атмосфера настоящего барбершопа.</p>
+        <div class="hero-btns">
+            <a href="https://wa.me/79991234567" class="btn-gold" target="_blank">Записаться</a>
+            <a href="#services" class="btn-ghost">Услуги и цены</a>
+        </div>
+    </div>
+</section>
+
+<div class="stats">
+    <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Лет работы</div>
+    </div>
+    <div class="stat">
+        <div class="stat-num">2К+</div>
+        <div class="stat-label">Довольных клиентов</div>
+    </div>
+    <div class="stat">
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Возвращаются снова</div>
+    </div>
+</div>
+
+<section class="services" id="services">
+    <div class="section-header">
+        <div>
+            <div class="section-tag">Прайс-лист</div>
+            <div class="section-title">Услуги</div>
+        </div>
+        <a href="https://wa.me/79991234567" class="btn-gold" target="_blank">Записаться</a>
+    </div>
+    <div class="services-grid">
+        <div class="service-card">
+            <div class="service-num">01</div>
+            <div class="service-name">Мужская стрижка</div>
+            <div class="service-desc">Классическая стрижка с мытьём головы и укладкой. Индивидуальный подход к каждому клиенту.</div>
+            <div class="service-price">1500 <span>₽</span></div>
+        </div>
+        <div class="service-card">
+            <div class="service-num">02</div>
+            <div class="service-name">Стрижка + борода</div>
+            <div class="service-desc">Полный комплекс ухода — стрижка, оформление и укладка бороды. Выглядеть безупречно — легко.</div>
+            <div class="service-price">2200 <span>₽</span></div>
+        </div>
+        <div class="service-card">
+            <div class="service-num">03</div>
+            <div class="service-name">Королевское бритьё</div>
+            <div class="service-desc">Бритьё опасной бритвой с горячим полотенцем, маской и питательным бальзамом для кожи.</div>
+            <div class="service-price">1800 <span>₽</span></div>
+        </div>
+        <div class="service-card">
+            <div class="service-num">04</div>
+            <div class="service-name">Детская стрижка</div>
+            <div class="service-desc">Аккуратная стрижка для мальчиков до 12 лет. Терпеливые мастера и комфортная атмосфера.</div>
+            <div class="service-price">900 <span>₽</span></div>
+        </div>
+        <div class="service-card">
+            <div class="service-num">05</div>
+            <div class="service-name">Окрашивание бороды</div>
+            <div class="service-desc">Натуральное окрашивание бороды для придания насыщенного цвета и ухоженного вида.</div>
+            <div class="service-price">1200 <span>₽</span></div>
+        </div>
+        <div class="service-card">
+            <div class="service-num">06</div>
+            <div class="service-name">VIP комплекс</div>
+            <div class="service-desc">Полный уход: стрижка, борода, бритьё, массаж головы и маска для лица. Максимальный результат.</div>
+            <div class="service-price">3500 <span>₽</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="masters" id="masters">
+    <div class="section-tag">Наша команда</div>
+    <div class="section-title" style="font-family:'Bebas Neue',sans-serif;font-size:60px;letter-spacing:3px;">Мастера</div>
+    <div class="masters-grid">
+        <div class="master-card">
+            <div class="master-img">ФОТО МАСТЕРА</div>
+            <div class="master-info">
+                <div class="master-name">Алексей Громов</div>
+                <div class="master-role">Старший барбер • 7 лет опыта</div>
+            </div>
+        </div>
+        <div class="master-card">
+            <div class="master-img">ФОТО МАСТЕРА</div>
+            <div class="master-info">
+                <div class="master-name">Дмитрий Ковалёв</div>
+                <div class="master-role">Барбер • 4 года опыта</div>
+            </div>
+        </div>
+        <div class="master-card">
+            <div class="master-img">ФОТО МАСТЕРА</div>
+            <div class="master-info">
+                <div class="master-name">Роман Захаров</div>
+                <div class="master-role">Барбер • 3 года опыта</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer id="contact">
+    <div class="footer-top">
+        <div>
+            <div class="footer-logo">BLADE</div>
+            <div class="footer-desc">Профессиональный барбершоп для тех, кто ценит качество и стиль. Запишись онлайн или по телефону.</div>
+            <a href="https://wa.me/79991234567" class="btn-book-footer" target="_blank">Записаться в WhatsApp</a>
+        </div>
+        <div class="footer-col">
+            <h4>Контакты</h4>
+            <p>📍 Москва, ул. Пример, 1</p>
+            <p>📞 +7 (999) 123-45-67</p>
+            <a href="https://t.me/yourtelegram" target="_blank">📱 Telegram</a>
+            <a href="https://instagram.com" target="_blank">📷 Instagram</a>
+        </div>
+        <div class="footer-col">
+            <h4>Часы работы</h4>
+            <p>ПН–ПТ: 10:00 – 21:00</p>
+            <p>СБ–ВС: 11:00 – 20:00</p>
+            <p>Без выходных</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2025 BLADE Barbershop</span>
+        <span>Все права защищены</span>
+    </div>
+</footer>
+
+</body>
+</html>
